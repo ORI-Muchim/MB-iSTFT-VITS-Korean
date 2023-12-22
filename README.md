@@ -3,7 +3,7 @@
 This is an multilingual implementation of [MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS)
 </br>
 
-- Currently Supported: Korean
+- Supported Language: Korean
 
 ## Table of Contents 
 - [Prerequisites](#prerequisites)
