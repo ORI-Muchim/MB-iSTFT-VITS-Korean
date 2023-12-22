@@ -1,29 +1,75 @@
-# MB-iSTFT-VITS with Multilingual Implementations
-<img src="./fig/with_tsukuyomi_chan.png" width="100%">
+# MB-iSTFT-VITS
 
-This is an multilingual implementation of [MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS) to support conversion to various languages. MB-iSTFT-VITS showed 4.1 times faster inference time compared with original VITS! </br>
-Preprocessed Japanese Single Speaker training material is provided with [つくよみちゃんコーパス(tsukuyomi-chan corpus).](https://tyc.rei-yumesaki.net/material/corpus/) You need to download the corpus and place 100 `.wav` files to `./tsukuyomi_raw`. 
+This is an multilingual implementation of [MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS)
 </br>
 
-- Currently Supported: Japanese / Korean
-- Chinese / CJKE / and other languages will be updated very soon!
+- Currently Supported: Korean
+
+## Table of Contents 
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Create transcript](#create-transcript)
+- [Preprocess](#preprocess)
+- [Train](#train)
+- [References](#references)
 
 
-# How to use
-Python >= 3.6 (Python == 3.7 is suggested)
+## Prerequisites
+- A Windows/Linux system with a minimum of `16GB` RAM.
+- A GPU with at least `12GB` of VRAM.
+- Python == 3.8
+- Anaconda installed.
+- PyTorch installed.
+- CUDA 11.x installed.
+- Zlib DLL installed.
 
-## Clone this repository
+Pytorch install command:
 ```sh
-git clone https://github.com/misakiudon/MB-iSTFT-VITS-multilingual.git
+pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
 ```
 
-## Install requirements
+CUDA 11.7 install:
+`https://developer.nvidia.com/cuda-11-7-0-download-archive`
+
+Zlib DLL install:
+`https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#install-zlib-windows`
+
+---
+
+
+## Installation 
+1. **Create an Anaconda environment:**
+
+```sh
+conda create -n vits python=3.8
+```
+
+2. **Activate the environment:**
+
+```sh
+conda activate vits
+```
+
+3. **Clone this repository to your local machine:**
+
+```sh
+git clone https://github.com/ORI-Muchim/MB-iSTFT-VITS-Korean.git
+```
+
+4. **Navigate to the cloned directory:**
+
+```sh
+cd MB-iSTFT-VITS-Korean
+```
+
+5. **Install the necessary dependencies:**
+
 ```sh
 pip install -r requirements.txt
 ```
-You may need to install espeak first: `apt-get install espeak`
 
-## Create manifest data
+
+## Create transcript
 ### Single speaker
 "n_speakers" should be 0 in config.json
 ```
@@ -44,28 +90,18 @@ path/to/XXX.wav|speaker id|transcript
 dataset/001.wav|0|こんにちは。
 ```
 
+
 ## Preprocess
-Japanese preprocessed manifest data is provided with `filelists/filelist_train2.txt.cleaned` and `filelists/filelist_val2.txt.cleaned`.
 ```sh
 # Single speaker
-python preprocess.py --text_index 1 --filelists path/to/filelist_train.txt path/to/filelist_val.txt --text_cleaners 'japanese_cleaners'
+python preprocess.py --text_index 1 --filelists path/to/filelist_train.txt path/to/filelist_val.txt --text_cleaners 'korean_cleaners'
 
 # Mutiple speakers
-python preprocess.py --text_index 2 --filelists path/to/filelist_train.txt path/to/filelist_val.txt --text_cleaners 'japanese_cleaners'
+python preprocess.py --text_index 2 --filelists path/to/filelist_train.txt path/to/filelist_val.txt --text_cleaners 'korean_cleaners'
 ```
 
-If your speech file is either not `22050Hz / Mono / PCM-16`, the you should resample your .wav file first. 
-```sh
-python convert_to_22050.py --in_path path/to/original_wav_dir/ --out_path path/to/output_wav_dir/
-```
+If your speech file is either not `Mono / PCM-16`, the you should resample your .wav file first. 
 
-## Build monotonic alignment search
-```sh
-# Cython-version Monotonoic Alignment Search
-cd monotonic_align
-mkdir monotonic_align
-python setup.py build_ext --inplace
-```
 
 ## Setting json file in [configs](configs)
 
@@ -75,7 +111,6 @@ python setup.py build_ext --inplace
 | MB-iSTFT-VITS | ```"subbands": 4,```<br>```"mb_istft_vits": true, ```<br>``` "upsample_rates": [4,4], ``` | ljs_mb_istft_vits.json |
 | MS-iSTFT-VITS | ```"subbands": 4,```<br>```"ms_istft_vits": true, ```<br>``` "upsample_rates": [4,4], ``` | ljs_ms_istft_vits.json |
 
-For tutorial, check `config/tsukuyomi_chan.json` for more examples
 - If you have done preprocessing, set "cleaned_text" to true. 
 - Change `training_files` and `validation_files` to the path of preprocessed manifest files. 
 - Select same `text_cleaners` you used in preprocessing step. 
@@ -88,14 +123,13 @@ python train_latest.py -c <config> -m <folder>
 # Mutiple speakers
 python train_latest_ms.py -c <config> -m <folder>
 ```
-In the case of training MB-iSTFT-VITS with Japanese tutorial corpus, run the following script. Resume training from lastest checkpoint is automatic.
-```sh
-python train_latest.py -c configs/tsukuyomi_chan.json -m tsukuyomi
-```
+Resume training from lastest checkpoint is automatic.
 
 After the training, you can check inference audio using [inference.ipynb](inference.ipynb)
 
 ## References
-- https://github.com/MasayaKawamura/MB-iSTFT-VITS
-- https://github.com/CjangCjengh/vits
-- https://github.com/Francis-Komizu/VITS
+- [MasayaKawamura/MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS)
+- [misakiudon/MB-iSTFT-VITS-multilingual](https://github.com/misakiudon/MB-iSTFT-VITS-multilingual)
+- [CjangCjengh/vits](https://github.com/CjangCjengh/vits)
+- [Francis-Komizu/VITS](https://github.com/Francis-Komizu/VITS)
+- [ORI-Muchim/PolyLangVITS](https://github.com/ORI-Muchim/PolyLangVITS)
