@@ -118,10 +118,10 @@ If your speech file is either not `Mono / PCM-16`, the you should resample your 
 ## Training
 ```sh
 # Single speaker
-python train_latest.py -c <config> -m <folder>
+python train.py -c <config> -m <folder>
 
 # Mutiple speakers
-python train_latest_ms.py -c <config> -m <folder>
+python train_ms.py -c <config> -m <folder>
 ```
 Resume training from lastest checkpoint is automatic.
 
