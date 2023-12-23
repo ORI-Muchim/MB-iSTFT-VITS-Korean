@@ -10,7 +10,7 @@ This is an multilingual implementation of [MB-iSTFT-VITS](https://github.com/Mas
 - [Installation](#installation)
 - [Create transcript](#create-transcript)
 - [Preprocess](#preprocess)
-- [Train](#train)
+- [Training](#training)
 - [References](#references)
 
 
@@ -115,7 +115,7 @@ If your speech file is either not `Mono / PCM-16`, the you should resample your 
 - Change `training_files` and `validation_files` to the path of preprocessed manifest files. 
 - Select same `text_cleaners` you used in preprocessing step. 
 
-## Train
+## Training
 ```sh
 # Single speaker
 python train_latest.py -c <config> -m <folder>
