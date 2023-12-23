@@ -1,6 +1,6 @@
 # MB-iSTFT-VITS
 
-This is an multilingual implementation of [MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS)
+This is an implementation of [MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS)
 </br>
 
 - Supported Language: Korean
