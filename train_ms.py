@@ -39,6 +39,11 @@ torch.autograd.set_detect_anomaly(True)
 torch.backends.cudnn.benchmark = True
 global_step = 0
 
+import gc
+
+gc.collect()
+torch.cuda.empty_cache()
+
 
 def main():
   """Assume Single Node Multi GPUs Training Only"""
