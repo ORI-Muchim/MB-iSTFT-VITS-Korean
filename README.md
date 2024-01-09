@@ -127,6 +127,12 @@ Resume training from lastest checkpoint is automatic.
 
 After the training, you can check inference audio using [inference.ipynb](inference.ipynb)
 
+OR, Check [inference_cpu.py](inference_cpu.py)
+
+```sh
+python inference_cpu.py {model_name} {model_step}
+```
+
 ## References
 - [MasayaKawamura/MB-iSTFT-VITS](https://github.com/MasayaKawamura/MB-iSTFT-VITS)
 - [misakiudon/MB-iSTFT-VITS-multilingual](https://github.com/misakiudon/MB-iSTFT-VITS-multilingual)
